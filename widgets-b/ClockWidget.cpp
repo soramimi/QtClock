@@ -69,7 +69,7 @@ void ClockWidget::paintEvent(QPaintEvent *event)
 		double t = num * (3.14159265358979323846264338 * 2) / den;
 		double x = sin(t) * radius * len;
 		double y = -cos(t) * radius * len;
-		pr.setPen({color, lineWidth});
+		pr.setPen({color, (qreal)lineWidth});
 		pr.drawLine(QPointF(cx, cy), QPointF(cx + x, cy + y));
 		if (drawCircle) {
 			pr.setPen(Qt::NoPen);

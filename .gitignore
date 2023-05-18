@@ -5,4 +5,4 @@ ui_*
 qrc_*
 *.o
 .qmake.stash
-build
+build*
