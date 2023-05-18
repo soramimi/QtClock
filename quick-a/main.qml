@@ -6,55 +6,50 @@ Window {
     width: 480
     height: 480
 
-	Rectangle {
-		id: hourHand
-		width: 2
-		height: parent.height * 0.2
-		color: "black"
-		antialiasing: true
-		transformOrigin: Item.Bottom
-		anchors.bottom: parent.verticalCenter
-		anchors.horizontalCenter: parent.horizontalCenter
-		rotation: (360/12) * ((new Date()).getHours() + (new Date()).getMinutes() / 60)
-	}
+    property double hour: 0
+    property double minute: 0
+    property double second: 0
+    property double millisec: 0
 
-	Rectangle {
-		id: minuteHand
-		width: 1
-		height: parent.height * 0.3
-		color: "black"
-		antialiasing: true
-		transformOrigin: Item.Bottom
-		anchors.bottom: parent.verticalCenter
-		anchors.horizontalCenter: parent.horizontalCenter
-		rotation: (360/60) * (new Date()).getMinutes() + (360/3600) * (new Date()).getSeconds()
-	}
+    Hand {
+        id: hourHand
+        width: 2
+        length: 0.4
+        color: "black"
+        rotation: (hour + minute / 60) * 360 / 12
+    }
 
-	Rectangle {
-		id: secondHand
-		width: 1
-		height: parent.height * 0.4
-		color: "red"
-		antialiasing: true
-		transformOrigin: Item.Bottom
-		anchors.bottom: parent.verticalCenter
-		anchors.horizontalCenter: parent.horizontalCenter
-		rotation: (360/60) * (new Date()).getSeconds()
-	}
+    Hand {
+        id: minuteHand
+        width: 1
+        length: 0.6
+        color: "black"
+        rotation: (minute + second / 60) * 360 / 60;
+    }
+
+    Hand {
+        id: secondHand
+        width: 1
+        length: 0.8
+        color: "red"
+        rotation: (second + millisec / 1000) * 360 / 60
+    }
 
     Timer {
-        interval: 1000
+        interval: 100
         running: true
         repeat: true
         onTriggered: {
-            hourHand.rotation = (360/12) * ((new Date()).getHours() + (new Date()).getMinutes() / 60);
-            minuteHand.rotation = (360/60) * (new Date()).getMinutes() + (360/3600) * (new Date()).getSeconds();
-            secondHand.rotation = (360/60) * (new Date()).getSeconds();
+            var now = new Date()
+            hour = now.getHours()
+            minute = now.getMinutes()
+            second = now.getSeconds()
+            millisec = now.getMilliseconds()
         }
     }
 
     Component.onCompleted: {
-        if (width == height) {
+        if (Screen.width === Screen.height) {
             visibility = Window.FullScreen
         }
     }

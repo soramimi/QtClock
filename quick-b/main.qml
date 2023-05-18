@@ -88,7 +88,7 @@ Window {
     }
 
     Component.onCompleted: {
-        if (width == height) {
+        if (Screen.width === Screen.height) {
             visibility = Window.FullScreen
         }
     }
